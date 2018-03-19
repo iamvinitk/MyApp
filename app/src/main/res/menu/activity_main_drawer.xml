@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+    <item android:title="@string/print_online">
+        <menu>
+            <item
+                android:id="@+id/print_order"
+                android:title="@string/print_order"
+                android:icon="@drawable/ic_menu_camera"
+                />
+        </menu>
+    </item>
+    <item android:title="@string/my_profile">
+        <menu>
+            <item
+                android:id="@+id/my_orders"
+                android:icon="@drawable/ic_shopping_basket_black_24dp"
+                android:title="@string/my_orders" />
+            <item
+                android:id="@+id/my_cart"
+                android:icon="@drawable/ic_shopping_cart_black_24dp"
+                android:title="@string/my_cart" />
+            <item
+                android:id="@+id/my_wishlist"
+                android:icon="@drawable/ic_favorite_black_24dp"
+                android:title="@string/my_wishlist" />
+            <item
+                android:id="@+id/my_account"
+                android:icon="@drawable/ic_person_black_24dp"
+                android:title="@string/my_account" />
+        </menu>
+    </item>
+
+    <item android:title="@string/communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="@string/share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="@string/send" />
+        </menu>
+    </item>
+
+</menu>
