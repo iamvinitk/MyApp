@@ -1,19 +1,12 @@
 package com.example.admin.myapp.activities;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
+
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.design.widget.NavigationView;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -27,14 +20,10 @@ import android.widget.Toast;
 
 import com.example.admin.myapp.R;
 import com.example.admin.myapp.fragments.ProductFragment;
-import com.example.admin.myapp.networking.DataFetch;
-import com.facebook.drawee.backends.pipeline.Fresco;
 
-import static com.example.admin.myapp.utils.Constants.DEFAULT;
 import static com.example.admin.myapp.utils.Constants.IS_LOGGED_OUT;
-import static com.example.admin.myapp.utils.Constants.PICKFILE_RESULT_CODE;
 import static com.example.admin.myapp.utils.Constants.PREFS_NAME;
-import static com.example.admin.myapp.utils.Constants.USER;
+import static com.example.admin.myapp.utils.Constants.TOKEN;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,7 +37,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Fresco.initialize(this);
 
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (prefs.getBoolean(IS_LOGGED_OUT, true)) {
@@ -74,28 +62,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
+//
+//        return super.onOptionsItemSelected(item);
+//    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -110,6 +96,18 @@ public class MainActivity extends AppCompatActivity
             case R.id.print_order:
                 startActivity(new Intent(this, PrintOrderActivity.class));
                 break;
+            case R.id.my_cart:
+                startActivity(new Intent(this, CartListActivity.class));
+                break;
+            case R.id.my_wishlist:
+                startActivity(new Intent(this, WishlistActivity.class));
+                break;
+            case R.id.nav_share:
+                Toast.makeText(getApplicationContext(), "Share Application", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_send:
+                Toast.makeText(getApplicationContext(), "Send Application", Toast.LENGTH_SHORT).show();
+                break;
             case 999:
                 ProductFragment productFragment = new ProductFragment();
                 ft.replace(R.id.content_frame, productFragment);
@@ -121,5 +119,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
     }
+
 
 }

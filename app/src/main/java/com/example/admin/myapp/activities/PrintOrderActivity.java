@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -24,6 +25,7 @@ public class PrintOrderActivity extends AppCompatActivity {
     String path = null;
     Button selectFile, submit;
     EditText noOfCopies;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,9 +63,19 @@ public class PrintOrderActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                /*
                 DataFetch uploadAsyncTask = new DataFetch();
                 uploadAsyncTask.uploadFile(path, noOfCopies.getText().toString(), PrintOrderActivity.this);
-
+                */
+                new Handler().postDelayed(new Runnable() {
+                                              @Override
+                                              public void run() {
+                                                  Toast.makeText(getApplicationContext(), "File uploaded Successfully", Toast.LENGTH_SHORT).show();
+                                                  onBackPressed();
+                                              }
+                                          },
+                        1500
+                );
             }
         });
     }

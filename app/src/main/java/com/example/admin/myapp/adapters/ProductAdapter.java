@@ -10,16 +10,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.admin.myapp.R;
 import com.example.admin.myapp.activities.ItemDetailsActivity;
 import com.example.admin.myapp.objects.Product;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.example.admin.myapp.utils.StoreUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import static com.example.admin.myapp.utils.Constants.PRODUCT_ID;
+import static com.example.admin.myapp.utils.Constants.PRODUCT_NAME;
+import static com.example.admin.myapp.utils.Constants.PRODUCT_PRICE;
+import static com.example.admin.myapp.utils.Constants.PRODUCT_URL;
 
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductHolder> {
@@ -40,7 +44,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
     }
 
     @Override
-    public void onBindViewHolder(ProductHolder holder, final int position) {
+    public void onBindViewHolder(final ProductHolder holder, final int position) {
         if (position >= getItemCount() - 5 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
             isLoading = true;
             loadMoreListener.onLoadMore();
@@ -52,18 +56,26 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             String price = "Rs. " + product.getmProductPrice();
             holder.productPrice.setText(price);
             holder.productThumbnail.setImageURI(Uri.parse(product.getmImageUrl()));
+            Picasso.with(context).load(product.getmImageUrl()).into(holder.productThumbnail);
+
             holder.mLayoutItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, ItemDetailsActivity.class);
                     intent.putExtra(PRODUCT_ID, product.getmProductId());
+                    intent.putExtra(PRODUCT_NAME, product.getmProductName());
+                    intent.putExtra(PRODUCT_URL, product.getmImageUrl());
+                    intent.putExtra(PRODUCT_PRICE, product.getmProductPrice());
                     context.startActivity(intent);
                 }
             });
             holder.addToWishlist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //Add to wishlist
+                    StoreUtils imageUrlUtils = new StoreUtils();
+                    imageUrlUtils.addWishlistImageUri(productsArrayList.get(position));
+                    holder.addToWishlist.setImageResource(R.drawable.ic_favorite_black_18dp);
+                    Toast.makeText(context, "Item added to wishlist.", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -88,7 +100,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
             mView = itemView;
             mLayoutItem = itemView.findViewById(R.id.rp_layout_item);
 
-            productThumbnail = (SimpleDraweeView) itemView.findViewById(R.id.rp_product_image);
+            productThumbnail = itemView.findViewById(R.id.rp_product_image);
             productName = itemView.findViewById(R.id.rp_product_name);
             productPrice = itemView.findViewById(R.id.rp_product_price);
             addToWishlist = itemView.findViewById(R.id.rp_add_to_wishlist);
@@ -103,10 +115,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductH
         isMoreDataAvailable = moreDataAvailable;
     }
 
-    public void notifyDataChanged(){
+    public void notifyDataChanged() {
         notifyDataSetChanged();
         isLoading = false;
     }
+
     public void setLoadMoreListener(OnLoadMoreListener loadMoreListener) {
         this.loadMoreListener = loadMoreListener;
     }

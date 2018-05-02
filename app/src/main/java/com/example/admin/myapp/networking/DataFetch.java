@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.example.admin.myapp.objects.Product;
+import com.example.admin.myapp.utils.StoreUtils;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -64,7 +65,7 @@ public class DataFetch {
 
 
     public ArrayList<Product> getProducts(Context context, int pageNumber) {
-        ArrayList<Product> productsArrayList = new ArrayList<>();
+        /*
         String url;
         String response = "";
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -100,13 +101,18 @@ public class DataFetch {
             e.printStackTrace();
         }
         // Add the request to the RequestQueue.
+        */
+        ArrayList<Product> productsArrayList = new ArrayList<>(StoreUtils.getProducts());
+
         System.out.println("Returning Product Data" + productsArrayList.size());
         return productsArrayList;
     }
 
+    /*
     public void uploadFile(String file, String noc, Context context) {
         new FetchData().execute(file, context, noc);
     }
+    */
 
     private int uploadTask(Object filename, Object context, String noc) {
         try {
@@ -132,9 +138,10 @@ public class DataFetch {
             return 0;
         }
     }
-
+    /*
     private static class FetchData extends AsyncTask<Object, Object, Integer> {
         Context context;
+
         @Override
         protected Integer doInBackground(Object... objects) {
             DataFetch dataFetch = new DataFetch();
@@ -146,9 +153,10 @@ public class DataFetch {
         protected void onPostExecute(Integer response) {
             if (response == 1) {
                 Toast.makeText(context, "File uploaded Successfully", Toast.LENGTH_SHORT).show();
-            }else
+            } else
                 Toast.makeText(context, "File didn't get Uploaded", Toast.LENGTH_SHORT).show();
         }
     }
+    */
 }
 

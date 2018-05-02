@@ -22,7 +22,11 @@ public class Constants {
     public static final String USER = "user";
     public static final String DEFAULT = "default";
     public static final String AUTHORIZATION = "Authorization";
+
     public static final String PRODUCT_ID = "product_id";
+    public static final String PRODUCT_URL = "product_url";
+    public static final String PRODUCT_NAME = "product_name";
+    public static final String PRODUCT_PRICE = "product_price";
 
     public static final int PICKFILE_RESULT_CODE = 69;
 }

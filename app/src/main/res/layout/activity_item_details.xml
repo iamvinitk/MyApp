@@ -24,12 +24,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView xmlns:fresco="http://schemas.android.com/apk/res-auto"
+            <ImageView
                 android:id="@+id/aid_image"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_margin="2dp"
-                fresco:placeholderImage="@color/stay_color" />
+              />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,7 +123,7 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_share_black_18dp" />
+                        android:src="@drawable/ic_action_share" />
 
                     <TextView
                         android:id="@+id/aid_text_action1"
@@ -153,9 +153,11 @@
                     android:weightSum="2">
 
                     <ImageView
+                        android:id="@+id/aid_wishlist"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_favorite_border_black_18dp" />
+                        android:tint="#FF1010"
+                        android:src="@drawable/ic_action_fav_bdr" />
 
                     <TextView
                         android:id="@+id/aid_text_action3"

@@ -1,6 +1,7 @@
 package com.example.admin.myapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,16 +22,18 @@ import java.util.Map;
 
 
 import static com.example.admin.myapp.utils.Constants.BASE_URL;
+import static com.example.admin.myapp.utils.Constants.IS_LOGGED_OUT;
 import static com.example.admin.myapp.utils.Constants.KEY_EMAIL;
 import static com.example.admin.myapp.utils.Constants.KEY_FIRSTNAME;
 import static com.example.admin.myapp.utils.Constants.KEY_LASTNAME;
 import static com.example.admin.myapp.utils.Constants.KEY_PASSWORD;
 import static com.example.admin.myapp.utils.Constants.KEY_USERNAME;
+import static com.example.admin.myapp.utils.Constants.PREFS_NAME;
 import static com.example.admin.myapp.utils.Constants.SIGNUP_URL;
 
 
 public class SignUpActivity extends AppCompatActivity {
-
+    private SharedPreferences prefs = null;
     private EditText editTextUsername;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -47,7 +50,7 @@ public class SignUpActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextFirstName = findViewById(R.id.editTextFirstname);
         editTextLastName = findViewById(R.id.editTextLastname);
-
+        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         Button signupButton = findViewById(R.id.buttonRegister);
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void signup() {
+        /*
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = BASE_URL + SIGNUP_URL;
 
@@ -98,5 +102,23 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+        */
+        if (editTextEmail.getText().toString().trim().length() != 0 &&
+                editTextFirstName.getText().toString().trim().length() != 0 &&
+                editTextLastName.getText().toString().trim().length() != 0 &&
+                editTextUsername.getText().toString().trim().length() != 0) {
+            if (editTextPassword.getText().toString().trim().length() < 8) {
+                Toast.makeText(SignUpActivity.this, "Minimum password length should be 8 characters", Toast.LENGTH_LONG).show();
+            } else {
+                prefs.edit().putString(KEY_USERNAME, editTextUsername.getText().toString()).apply();
+                prefs.edit().putString(KEY_PASSWORD, editTextPassword.getText().toString()).apply();
+                Toast.makeText(SignUpActivity.this, "Successfully Signed Up", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            }
+        } else {
+            Toast.makeText(SignUpActivity.this, "All fields are Mandatory", Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }

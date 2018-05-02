@@ -29,7 +29,10 @@
         <activity android:name=".activities.ItemDetailsActivity" />
         <activity android:name=".activities.SignUpActivity" />
         <activity android:name=".activities.LoginActivity" />
-        <activity android:name=".activities.PrintOrderActivity"></activity>
+        <activity android:name=".activities.PrintOrderActivity"/>
+        <activity android:name=".activities.CartListActivity"/>
+                <activity android:name=".activities.WishlistActivity"/>
+
     </application>
 
 </manifest>

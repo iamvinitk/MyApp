@@ -63,6 +63,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login() {
+        /*
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = BASE_URL + LOGIN_URL;
 
@@ -109,5 +110,15 @@ public class LoginActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+        */
+        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (editTextUsername.getText().toString().trim().equalsIgnoreCase(prefs.getString(KEY_USERNAME, "")) &&
+                editTextPassword.getText().toString().trim().equalsIgnoreCase(prefs.getString(KEY_PASSWORD, ""))) {
+            prefs.edit().putBoolean(IS_LOGGED_OUT, false).apply();
+            Toast.makeText(LoginActivity.this, "Logged in successfully", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        } else {
+            Toast.makeText(LoginActivity.this, "Incorrect Credentials", Toast.LENGTH_LONG).show();
+        }
     }
 }

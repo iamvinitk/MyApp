@@ -60,7 +60,7 @@ public class ProductFragment extends Fragment {
                 recyclerView.post(new Runnable() {
                     @Override
                     public void run() {
-                        loadMore();
+//                        loadMore();
                     }
                 });
             }
@@ -91,7 +91,7 @@ public class ProductFragment extends Fragment {
         protected void onPostExecute(ArrayList<Product> response) {
             if (response.size() == 0) {
                 productAdapter.setMoreDataAvailable(false);
-            } else if (response.size() > 0) {
+            } else {
                 productsList.addAll(response);
                 System.out.print("No. of products:" + productsList.size());
                 productAdapter.notifyDataChanged();
